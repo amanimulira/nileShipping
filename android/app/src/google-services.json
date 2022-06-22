@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "815304788180",
+    "project_id": "nileshipping-aa924",
+    "storage_bucket": "nileshipping-aa924.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:815304788180:android:1c8e530edb8ebf2a0bd341",
+        "android_client_info": {
+          "package_name": "com.example.nile_shipping"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "815304788180-7ig9h4ic2k6b40qlh50a256ejte1bbbm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.nile_shipping",
+            "certificate_hash": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+          }
+        },
+        {
+          "client_id": "815304788180-ul6k348h6s08icn2ig30bh301fpkvm4t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0LnHi35rcZF3UoxI5fgCvCloZ0D-sGvE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "815304788180-ul6k348h6s08icn2ig30bh301fpkvm4t.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "815304788180-jd3euoljtosd2pl2a8e2ep9gba50jbp3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.nileShipping"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
