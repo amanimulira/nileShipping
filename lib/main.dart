@@ -1,12 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:nile_shipping/cart_products.dart';
+import 'package:nile_shipping/pages/Login_page.dart';
 import 'package:nile_shipping/pages/new_product_screen.dart';
 import 'package:nile_shipping/pages/products_page.dart';
 import 'package:nile_shipping/pages/search_page.dart';
 import 'package:nile_shipping/search_bar.dart';
-
-import 'dot_slider.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -56,7 +55,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     ProductsPage(),
     MyWidget(),
     CartProducts(),
-    PrefetchImageDemo(),
+    LoginPage(),
   ];
 
   void _onItemTapped(int index) {

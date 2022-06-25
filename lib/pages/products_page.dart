@@ -6,6 +6,9 @@ import 'package:nile_shipping/product_controller.dart';
 
 class ProductsPage extends StatelessWidget {
   final ProductController productController = Get.put(ProductController());
+
+  ProductsPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,7 +70,7 @@ class ProductsPage extends StatelessWidget {
                                 height: 20,
                               ),
                               SizedBox(
-                                  height: 452,
+                                  height: 454,
                                   child: ProductCard2(
                                       product:
                                           productController.products[index],
@@ -152,7 +155,7 @@ class ProductCard extends StatelessWidget {
           children: [
             Row(children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+                padding: const EdgeInsets.fromLTRB(8, 8, 0, 8),
                 child: SizedBox(
                   height: 100,
                   width: 100,
@@ -275,53 +278,59 @@ class ProductCard2 extends StatelessWidget {
                 fontWeight: FontWeight.normal),
           ),
           SizedBox(
-            height: 400,
+            height: 410,
             child: GridView.count(
               physics: NeverScrollableScrollPhysics(),
               crossAxisCount: 2,
               children: List.generate(4, (index1) {
-                return InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (BuildContext _context) =>
-                                ProductViewPage(index: index)));
-                  },
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: Text(
-                          '${product.name} ',
-                          maxLines: 1,
-                          style: const TextStyle(
-                              fontSize: 18,
-                              color: Colors.black,
-                              fontWeight: FontWeight.normal),
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext _context) =>
+                                  ProductViewPage(index: index)));
+                    },
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(2),
+                          child: Text(
+                            '${product.name} ',
+                            maxLines: 1,
+                            style: const TextStyle(
+                                fontSize: 18,
+                                color: Colors.black,
+                                fontWeight: FontWeight.normal),
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        width: 150,
-                        height: 150,
-                        child: Image.network(
-                          product.imageUrls.toString(),
-                          fit: BoxFit.cover,
+                        SizedBox(
+                          width: 150,
+                          height: 150,
+                          child: Image.network(
+                            product.imageUrls.toString(),
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 );
               }),
             ),
           ),
-          const Text(
-            '  explore more ... ',
-            maxLines: 1,
-            style: TextStyle(
-                fontSize: 18,
-                color: Colors.black,
-                fontWeight: FontWeight.normal),
+          const Padding(
+            padding: EdgeInsets.fromLTRB(8, 0, 0, 0),
+            child: Text(
+              'explore more ... [ future text button]',
+              maxLines: 1,
+              style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.black,
+                  fontWeight: FontWeight.normal),
+            ),
           ),
         ],
       ),
