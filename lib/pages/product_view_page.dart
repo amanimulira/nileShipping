@@ -1,11 +1,7 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-
 import 'package:nile_shipping/cart_controller.dart';
 import 'package:get/get.dart';
 import 'package:nile_shipping/search_bar.dart';
-
 import '../product_controller.dart';
 
 class ProductViewPage extends StatelessWidget {

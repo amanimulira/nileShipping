@@ -4,7 +4,6 @@ import 'package:nile_shipping/cart_products.dart';
 import 'package:nile_shipping/pages/new_product_screen.dart';
 import 'package:nile_shipping/pages/products_page.dart';
 import 'package:nile_shipping/pages/search_page.dart';
-import 'package:nile_shipping/scrollingview.dart';
 import 'package:nile_shipping/search_bar.dart';
 
 import 'dot_slider.dart';
@@ -37,8 +36,6 @@ class MyApp extends StatelessWidget {
               secondary: Color.fromARGB(0, 0, 0, 0)),
         ),
         routes: {
-          // When navigating to the "/second" route, build the SecondScreen widget.
-          '/second': (context) => HomePages(),
           '/products': (context) => ProductsPage(),
           '/products/new_product_screen': (context) => NewProductScreen(),
         },

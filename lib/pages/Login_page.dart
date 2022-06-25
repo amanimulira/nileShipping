@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:nile_shipping/scrollingview.dart';
+import 'package:nile_shipping/pages/products_page.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginPage extends StatefulWidget {
@@ -108,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                         if (user != null) {
                           Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
-                                  builder: (context) => HomePages()));
+                                  builder: (context) => ProductsPage()));
                         }
                       },
                       style: TextButton.styleFrom(

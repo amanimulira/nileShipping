@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nile_shipping/dot_slider.dart';
 import 'package:nile_shipping/models/product_model.dart';
 import 'package:nile_shipping/pages/product_view_page.dart';
 import 'package:nile_shipping/product_controller.dart';
@@ -14,7 +13,7 @@ class ProductsPage extends StatelessWidget {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             const SliverAppBar(
-              expandedHeight: 50,
+              expandedHeight: 45,
               floating: false,
               pinned: false,
               flexibleSpace: FlexibleSpaceBar(
@@ -64,6 +63,15 @@ class ProductsPage extends StatelessWidget {
                                   index: index,
                                 ),
                               ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              SizedBox(
+                                  height: 452,
+                                  child: ProductCard2(
+                                      product:
+                                          productController.products[index],
+                                      index: index)),
                               SizedBox(
                                 height: 20,
                               ),
@@ -237,5 +245,86 @@ class ProductCard1 extends StatelessWidget {
                 ),
               ))),
     );
+  }
+}
+
+class ProductCard2 extends StatelessWidget {
+  final Product product;
+  final int index;
+
+  const ProductCard2({
+    Key? key,
+    required this.product,
+    required this.index,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+        child: DecoratedBox(
+      decoration: BoxDecoration(color: Color.fromARGB(179, 255, 255, 255)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '${product.category} ',
+            maxLines: 1,
+            style: const TextStyle(
+                fontSize: 18,
+                color: Colors.black,
+                fontWeight: FontWeight.normal),
+          ),
+          SizedBox(
+            height: 400,
+            child: GridView.count(
+              physics: NeverScrollableScrollPhysics(),
+              crossAxisCount: 2,
+              children: List.generate(4, (index1) {
+                return InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext _context) =>
+                                ProductViewPage(index: index)));
+                  },
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: Text(
+                          '${product.name} ',
+                          maxLines: 1,
+                          style: const TextStyle(
+                              fontSize: 18,
+                              color: Colors.black,
+                              fontWeight: FontWeight.normal),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 150,
+                        height: 150,
+                        child: Image.network(
+                          product.imageUrls.toString(),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }),
+            ),
+          ),
+          const Text(
+            '  explore more ... ',
+            maxLines: 1,
+            style: TextStyle(
+                fontSize: 18,
+                color: Colors.black,
+                fontWeight: FontWeight.normal),
+          ),
+        ],
+      ),
+    ));
   }
 }
