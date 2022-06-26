@@ -9,16 +9,16 @@ class SearchBar extends StatefulWidget {
 }
 
 class _SearchBarState extends State<SearchBar> {
-
   @override
   Widget build(BuildContext context) {
     return Column(children: [
       SizedBox(
-          width: 350,
+          width: double.infinity,
           height: 40,
           child: DecoratedBox(
             decoration: const BoxDecoration(
-              color: Colors.white,
+              color: Colors.white38,
+              borderRadius: BorderRadius.all(Radius.circular(5)),
             ),
             child: TextButton(
                 onPressed: () {
@@ -30,12 +30,15 @@ class _SearchBarState extends State<SearchBar> {
                       Icons.search,
                       color: Colors.black,
                     ),
-                    Text(
-                      "   Search",
-                      style: TextStyle(
-                        color: Colors.black,
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(8.0, 0, 0, 0),
+                      child: Text(
+                        "Search",
+                        style: TextStyle(
+                          color: Colors.black87,
+                        ),
                       ),
-                    ),
+                    )
                   ],
                 )),
           ))
