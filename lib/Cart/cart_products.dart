@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nile_shipping/cart_controller.dart';
+import 'package:nile_shipping/Cart/cart_controller.dart';
 import 'package:nile_shipping/pages/product_view_page.dart';
 import 'cart_total.dart';
-import 'models/product_model.dart';
+import '../models/product_model.dart';
 
 class CartProducts extends StatelessWidget {
   final CartController controller = Get.put(CartController());

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:nile_shipping/models/product_model.dart';
 import 'package:nile_shipping/services/database_service.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:nile_shipping/product_controller.dart';
+import 'package:nile_shipping/Pages/product_controller.dart';
 import 'dart:core';
 import 'package:nile_shipping/services/storage_services.dart';
+import 'new_product_screen_p2.dart';
+import 'package:nile_shipping/Widgets/new_data.dart';
 
 class NewProductScreen extends StatefulWidget {
-  NewProductScreen({Key? key}) : super(key: key);
+  const NewProductScreen({Key? key}) : super(key: key);
 
   @override
   State<NewProductScreen> createState() => _NewProductScreenState();
@@ -16,7 +16,6 @@ class NewProductScreen extends StatefulWidget {
 
 class _NewProductScreenState extends State<NewProductScreen> {
   final ProductController productController = Get.find();
-
   StorageService storage = StorageService();
   DatabaseService database = DatabaseService();
 
@@ -24,9 +23,35 @@ class _NewProductScreenState extends State<NewProductScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add a Product'),
-        foregroundColor: Colors.black,
-      ),
+          title: const Text('Add a Product'),
+          foregroundColor: Colors.black,
+          leading: SizedBox(
+            width: 200,
+            child: TextButton(
+              child: const Text(
+                "cancel",
+                style: TextStyle(color: Colors.black, fontSize: 12),
+              ),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ),
+          actions: [
+            Padding(
+                padding: const EdgeInsets.only(right: 20.0),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext _context) =>
+                                const NewProductScreen2()));
+                  },
+                  child: const Icon(
+                    Icons.navigate_next,
+                    size: 26.0,
+                  ),
+                )),
+          ]),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Obx(
@@ -34,83 +59,69 @@ class _NewProductScreenState extends State<NewProductScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  height: 100,
-                  child: Card(
-                    margin: EdgeInsets.zero,
-                    color: Colors.black,
-                    child: Row(
-                      children: [
-                        IconButton(
-                          onPressed: () async {
-                            ImagePicker _picker = ImagePicker();
-                            final XFile? _image = await _picker.pickImage(
-                                source: ImageSource.gallery);
-                            if (_image == null) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text("No image was selected"),
-                                ),
-                              );
-                            }
-                            if (_image != null) {
-                              await storage.uploadImage(_image);
-                              var imageUrl =
-                                  await storage.getDownloadURL(_image.name);
-                              productController.newProduct.update(
-                                  'imageUrl', (_) => imageUrl,
-                                  ifAbsent: () => imageUrl);
-                            }
-                          },
-                          icon: const Icon(
-                            Icons.add_circle,
-                            color: Colors.black,
-                          ),
-                        ),
-                        const Text(
-                          'Add a New image',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        )
-                      ],
+                const SizedBox(
+                  width: double.infinity,
+                  child: Text(
+                    'Product Information',
+                    style: TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
                     ),
+                    textAlign: TextAlign.center,
                   ),
+                ),
+                const SizedBox(
+                  height: 20,
                 ),
                 const SizedBox(height: 20),
-                const Text(
-                  'Product Information',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                SizedBox(
+                  width: double.infinity,
+                  child: buildTextFormField(
+                    'Product ID',
+                    'id',
+                    productController,
                   ),
                 ),
-                _buildTextFormField(
-                  'Product ID',
-                  'id',
-                  productController,
+                const SizedBox(
+                  height: 20,
                 ),
-                _buildTextFormField(
-                  'Product Name',
-                  'name',
-                  productController,
+                SizedBox(
+                  width: double.infinity,
+                  child: buildTextFormField(
+                    'Product Name',
+                    'name',
+                    productController,
+                  ),
                 ),
-                _buildTextFormField(
-                  'Product Description',
-                  'description',
-                  productController,
+                const SizedBox(
+                  height: 20,
                 ),
-                _buildTextFormField(
-                  'Product Category',
-                  'category',
-                  productController,
+                SizedBox(
+                  width: double.infinity,
+                  child: buildTextFormField(
+                    'Product Description',
+                    'description',
+                    productController,
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  child: buildTextFormField(
+                    'Product Category',
+                    'category',
+                    productController,
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
                 ),
                 const SizedBox(height: 10),
-                _buildSlider('Price', 'price', productController,
+                buildSlider('Price', 'price', productController,
                     productController.price),
-                _buildSlider(
+                buildSlider(
                   'Quantity',
                   'quantity',
                   productController,
@@ -119,139 +130,23 @@ class _NewProductScreenState extends State<NewProductScreen> {
                 const SizedBox(
                   height: 10,
                 ),
-                _buildCheckbox(
+                buildCheckbox(
                   'Recommended',
                   'isRecommended',
                   productController,
                   productController.isRecommended,
                 ),
-                _buildCheckbox(
+                buildCheckbox(
                   'popular',
                   'isPopular',
                   productController,
                   productController.isPopular,
                 ),
-                Center(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      database.addProduct(Product(
-                        id: int.parse(productController.newProduct['id']),
-                        name: productController.newProduct['name'],
-                        category: productController.newProduct['category'],
-                        description:
-                            productController.newProduct['description'],
-                        imageUrls: productController.newProduct['imageUrl'],
-                        isRecommended:
-                            productController.newProduct['isRecommended'],
-                        isPopular: productController.newProduct['isPopular'],
-                        price: productController.newProduct['price'],
-                        quantity: productController.newProduct['quantity'],
-                      ));
-                    },
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.black,
-                    ),
-                    child: const Text(
-                      'save',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                )
               ],
             ),
           ),
         ),
       ),
-    );
-  }
-
-  Row _buildCheckbox(
-    String title,
-    String name,
-    ProductController productController,
-    bool? controllerValue,
-  ) {
-    return Row(
-      children: [
-        SizedBox(
-          width: 125,
-          child: Text(title,
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-              )),
-        ),
-        Checkbox(
-            value: (controllerValue == null) ? false : controllerValue,
-            checkColor: Colors.black,
-            activeColor: Colors.black12,
-            onChanged: (value) {
-              productController.newProduct.update(
-                name,
-                (_) => value,
-                ifAbsent: () => value,
-              );
-            }),
-      ],
-    );
-  }
-
-  Row _buildSlider(
-    String title,
-    String name,
-    ProductController productController,
-    double? controllerValue,
-  ) {
-    return Row(
-      children: [
-        SizedBox(
-          width: 75,
-          child: Text(
-            title,
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        Expanded(
-          child: Slider(
-            value: (controllerValue == null) ? 0 : controllerValue,
-            min: 0,
-            max: 100,
-            divisions: 10,
-            activeColor: Colors.black,
-            inactiveColor: Colors.black,
-            onChanged: (value) {
-              productController.newProduct.update(
-                name,
-                (_) => value,
-                ifAbsent: () => value,
-              );
-            },
-          ),
-        ),
-      ],
-    );
-  }
-
-  TextFormField _buildTextFormField(
-    String hintText,
-    String name,
-    ProductController productController,
-  ) {
-    return TextFormField(
-      decoration: InputDecoration(hintText: hintText),
-      onChanged: (value) {
-        productController.newProduct.update(
-          name,
-          (_) => value,
-          ifAbsent: () => value,
-        );
-      },
     );
   }
 }

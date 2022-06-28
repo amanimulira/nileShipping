@@ -6,22 +6,23 @@ class ProductSearchPage extends SearchDelegate {
       FirebaseFirestore.instance.collection('products');
 
   @override
-  String get searchFieldLabel => 'search ';
+  String get searchFieldLabel => 'search';
 
   @override
   TextStyle? get searchFieldStyle => const TextStyle(
-        fontSize: 10,
+        fontSize: 2,
         fontWeight: FontWeight.normal,
       );
 
   @override
   InputDecorationTheme? get searchFieldDecorationTheme =>
       const InputDecorationTheme(
-          isDense: true,
+          isCollapsed: true,
           contentPadding: EdgeInsets.all(8),
           fillColor: Colors.grey,
           filled: true,
-          constraints: BoxConstraints(maxHeight: 35, maxWidth: double.infinity),
+          focusColor: Colors.grey,
+          constraints: BoxConstraints(maxHeight: 30, maxWidth: double.infinity),
           border: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(4))));
 
@@ -40,24 +41,28 @@ class ProductSearchPage extends SearchDelegate {
 
   @override
   Widget? buildLeading(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: IconButton(
-        icon: const Icon(Icons.arrow_back),
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
+    return SizedBox(
+      width: 5,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
       ),
     );
   }
 
   @override
   Widget buildResults(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
+    return Scaffold(
+      body: StreamBuilder<QuerySnapshot>(
         stream: _firebaseFirestore.snapshots().asBroadcastStream(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else {
             if (snapshot.data!.docs
                 .where((QueryDocumentSnapshot<Object?> element) =>
@@ -115,7 +120,9 @@ class ProductSearchPage extends SearchDelegate {
               );
             }
           }
-        });
+        },
+      ),
+    );
   }
 
   @override

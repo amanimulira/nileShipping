@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nile_shipping/pages/product_search_page.dart';
+import 'package:nile_shipping/Search/product_search_page.dart';
 
 class SearchBar extends StatefulWidget {
   const SearchBar({Key? key}) : super(key: key);
@@ -22,7 +22,10 @@ class _SearchBarState extends State<SearchBar> {
             ),
             child: TextButton(
                 onPressed: () {
-                  showSearch(context: context, delegate: ProductSearchPage());
+                  showSearch(
+                      context: context,
+                      delegate: ProductSearchPage(),
+                      useRootNavigator: true);
                 },
                 child: Row(
                   children: const [

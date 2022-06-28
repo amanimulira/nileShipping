@@ -1,6 +1,6 @@
 import 'package:nile_shipping/services/database_service.dart';
 
-import 'models/product_model.dart';
+import '../models/product_model.dart';
 import 'package:get/get.dart';
 
 class ProductController extends GetxController {

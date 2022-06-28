@@ -1,11 +1,14 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:nile_shipping/cart_products.dart';
+import 'package:nile_shipping/Cart/cart_products.dart';
+import 'package:nile_shipping/Services/analytics_service.dart';
+import 'package:nile_shipping/nav_bar.dart';
 import 'package:nile_shipping/pages/Login_page.dart';
 import 'package:nile_shipping/pages/new_product_screen.dart';
 import 'package:nile_shipping/pages/products_page.dart';
 import 'package:nile_shipping/pages/search_page.dart';
-import 'package:nile_shipping/search_bar.dart';
+import 'package:nile_shipping/Search/search_bar.dart';
+import 'package:nile_shipping/themes/input_text_theme.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -17,15 +20,16 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  static const String _title = 'Flutter Code Sample';
+  static const String _title = 'Nile Shipping';
 
   @override
   Widget build(BuildContext context) => MaterialApp(
         title: _title,
         theme: ThemeData(
-          textTheme: TextTheme(
-            bodyText1: const TextStyle(),
-            bodyText2: const TextStyle(),
+          inputDecorationTheme: MyInputTheme().theme(),
+          textTheme: const TextTheme(
+            bodyText1: TextStyle(),
+            bodyText2: TextStyle(),
           ).apply(
             bodyColor: Colors.black,
             displayColor: Colors.black,
@@ -39,6 +43,7 @@ class MyApp extends StatelessWidget {
           '/products/new_product_screen': (context) => NewProductScreen(),
         },
         home: const MyStatefulWidget(),
+        navigatorObservers: [AnalyticsService().getAnalyticsObserver()],
       );
 }
 
@@ -50,25 +55,11 @@ class MyStatefulWidget extends StatefulWidget {
 }
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-  int _selectedIndex = 0;
-  final screens = [
-    ProductsPage(),
-    MyWidget(),
-    CartProducts(),
-    LoginPage(),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: SearchBar(),
+        title: const SearchBar(),
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
@@ -81,39 +72,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           ),
         ),
       ),
-      body: Center(
-        child: screens.elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: SizedBox(
-        height: 90,
-        child: BottomNavigationBar(
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          type: BottomNavigationBarType.fixed,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: 'search',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart),
-              label: 'Cart',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Profile',
-            ),
-          ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: Colors.black,
-          unselectedItemColor: Colors.black12,
-          onTap: _onItemTapped,
-        ),
-      ),
+      body: NavBar(),
     );
   }
 }

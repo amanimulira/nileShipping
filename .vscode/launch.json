@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "name": "Flutter (lib/input_text_theme.dart)",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib/input_text_theme.dart"
+        }
+    ]
+}

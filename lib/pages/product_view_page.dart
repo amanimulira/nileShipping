@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:nile_shipping/cart_controller.dart';
+import 'package:flutter/services.dart';
+import 'package:nile_shipping/Cart/cart_controller.dart';
 import 'package:get/get.dart';
-import 'package:nile_shipping/search_bar.dart';
-import '../product_controller.dart';
+import 'package:nile_shipping/Search/search_bar.dart';
+import 'product_controller.dart';
 
 class ProductViewPage extends StatelessWidget {
   final int index;
-
   final cartController = Get.put(CartController());
 
   ProductViewPage({
@@ -20,8 +20,8 @@ class ProductViewPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: SearchBar(),
-        titleTextStyle: TextStyle(
+        title: const SearchBar(),
+        titleTextStyle: const TextStyle(
           color: Colors.black,
         ),
         flexibleSpace: Container(
@@ -68,6 +68,7 @@ class ProductViewPage extends StatelessWidget {
                       width: 200,
                       child: TextButton(
                           onPressed: () {
+                            HapticFeedback.heavyImpact();
                             cartController
                                 .addProduct(productController.products[index]);
                           },
@@ -75,7 +76,7 @@ class ProductViewPage extends StatelessWidget {
                             primary: Colors.black,
                             backgroundColor: Colors.lime,
                           ),
-                          child: Text(
+                          child: const Text(
                             "add to card",
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.normal),

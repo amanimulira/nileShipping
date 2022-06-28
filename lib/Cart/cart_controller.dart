@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import 'models/product_model.dart';
+import '../models/product_model.dart';
 
 class CartController extends GetxController {
   final _products = {}.obs;

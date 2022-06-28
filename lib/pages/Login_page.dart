@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:nile_shipping/componets/password_field.dart';
 import 'package:nile_shipping/pages/products_page.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -62,83 +63,69 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Center(
       child: Scaffold(
-        appBar: AppBar(
-          foregroundColor: Colors.black,
-          automaticallyImplyLeading: false,
-          leadingWidth: 100,
-          leading: ElevatedButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel', style: TextStyle(color: Colors.black)),
-            style: ElevatedButton.styleFrom(
-                elevation: 0, primary: Colors.transparent),
-          ),
-          title: const Text(
-            "Nile shipping",
-          ),
-        ),
         body: Center(
-          child: SizedBox(
-            width: 300,
-            child: Column(
-              children: [
-                const Text("Sign into account"),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    border: UnderlineInputBorder(),
-                    labelText: 'Enter your email',
-                  ),
-                  controller: _email,
+          child: Column(
+            children: [
+              const SizedBox(
+                width: 300,
+                child: PasswordField(),
+              ),
+              const Text("Sign into account"),
+              TextFormField(
+                decoration: const InputDecoration(
+                  border: UnderlineInputBorder(),
+                  labelText: 'Enter your email',
                 ),
-                TextFormField(
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                    border: UnderlineInputBorder(),
-                    labelText: 'Enter your password',
-                  ),
-                  controller: _password,
+                controller: _email,
+              ),
+              TextFormField(
+                obscureText: true,
+                decoration: const InputDecoration(
+                  border: UnderlineInputBorder(),
+                  labelText: 'Enter your password',
                 ),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                      onPressed: () async {
-                        User? user = await loginUsingEmailPassword(
-                            email: _email.text,
-                            password: _password.text,
-                            context: context);
-                        if (user != null) {
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) => ProductsPage()));
-                        }
-                      },
-                      style: TextButton.styleFrom(
-                        primary: Colors.black,
-                        backgroundColor: Colors.lime,
+                controller: _password,
+              ),
+              SizedBox(
+                width: 300,
+                child: ElevatedButton(
+                    onPressed: () async {
+                      User? user = await loginUsingEmailPassword(
+                          email: _email.text,
+                          password: _password.text,
+                          context: context);
+                      if (user != null) {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => ProductsPage()));
+                      }
+                    },
+                    style: TextButton.styleFrom(
+                      primary: Colors.black,
+                      backgroundColor: Colors.lime,
+                    ),
+                    child: const Text(
+                      "Sign In with email and password",
+                      style: TextStyle(fontSize: 12),
+                    )),
+              ),
+              SizedBox(
+                width: 300,
+                child: ElevatedButton(
+                    onPressed: () {
+                      signInWithGoogle();
+                    },
+                    style: TextButton.styleFrom(
+                      primary: Colors.black,
+                      backgroundColor: Colors.lime,
+                    ),
+                    child: const Text(
+                      "Sign In with google",
+                      style: TextStyle(
+                        fontSize: 12,
                       ),
-                      child: const Text(
-                        "Sign In with email and password",
-                        style: TextStyle(fontSize: 12),
-                      )),
-                ),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                      onPressed: () {
-                        signInWithGoogle();
-                      },
-                      style: TextButton.styleFrom(
-                        primary: Colors.black,
-                        backgroundColor: Colors.lime,
-                      ),
-                      child: const Text(
-                        "Sign In with google",
-                        style: TextStyle(
-                          fontSize: 12,
-                        ),
-                      )),
-                ),
-              ],
-            ),
+                    )),
+              ),
+            ],
           ),
         ),
       ),
